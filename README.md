@@ -19,7 +19,7 @@ and creates sensors for each available meter and channel.
 
 ### HACS (preferred)
 1. Go to HACS → Integrations → Custom Repositories.
-2. Add your repo URL (`https://github.com/<jouwnaam>/ha-kenter`) as type *Integration*.
+2. Add your repo URL (`https://github.com/filmgarage/ha-kenter`) as type *Integration*.
 3. Search for "Kenter Metering" in HACS and install.
 4. Restart Home Assistant.
 
