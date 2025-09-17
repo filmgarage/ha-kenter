@@ -11,7 +11,7 @@ and creates sensors for each available meter and channel.
 - Fetches measurement data hourly.
 - Creates sensors with entity IDs like:  
 
-`sensor.kenter_<meterid>_<channelid>`
+`sensor.kenter_<meterid>_<shortname>`
 
 - Units are automatically set from the API (kWh, m³, etc.).
 
