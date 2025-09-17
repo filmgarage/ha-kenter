@@ -34,7 +34,7 @@ and creates sensors for each available meter and channel.
 4. Done ✅
 
 ## Example sensors
-- `sensor.kenter_00099999_10180` → Supply of electrical energy
+- `sensor.kenter_00099999_feed_in` → Supply of electrical energy
 - `sensor.kenter_00099999_10280` → Feed-in / generation of electricity
 
 ## Notes
