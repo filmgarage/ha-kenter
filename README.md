@@ -34,8 +34,8 @@ and creates sensors for each available meter and channel.
 4. Done ✅
 
 ## Example sensors
-- `sensor.kenter_00099999_feed_in` → Supply of electrical energy
-- `sensor.kenter_00099999_10280` → Feed-in / generation of electricity
+- `sensor.kenter_00099999_consumption` → Supply of electrical energy
+- `sensor.kenter_00099999_feed_in` → Feed-in / generation of electricity
 
 ## Notes
 - Token is refreshed automatically (expires every hour).
