@@ -24,6 +24,11 @@ STATE_CLASS_MAP = {
 }
 
 
+def _beautify(shortname: str) -> str:
+    """Convert shortname into a more user-friendly format."""
+    return shortname.replace("_", " ").title()
+
+
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up Kenter sensors based on the config entry."""
     coordinator = hass.data[DOMAIN][entry.entry_id]
@@ -51,7 +56,7 @@ class KenterSensor(CoordinatorEntity, SensorEntity):
     @property
     def name(self):
         """Return the friendly name of the sensor."""
-        return f"Kenter {self._meter} {self._shortname}"
+        return f"Kenter {self._meter} {_beautify(self._shortname)}"
 
     @property
     def unique_id(self):
