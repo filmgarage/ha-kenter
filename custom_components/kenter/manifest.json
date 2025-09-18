@@ -1,8 +1,9 @@
 {
   "domain": "kenter",
   "name": "Kenter Metering",
-  "version": "0.1.0",
-  "documentation": "https://www.kenter.nu/",
+  "version": "0.1.1",
+  "documentation": "https://github.com/filmgarage/ha-kenter",
+  "issue_tracker": "https://github.com/filmgarage/ha-kenter/issues",
   "requirements": [],
   "codeowners": ["@filmgarage"],
   "config_flow": true,
