@@ -1,0 +1,19 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Kenter Metering",
+        "data": {
+          "client_id": "CLIENT ID",
+          "client_secret": "PASSWORD"
+        }
+      }
+    },
+    "error": {
+      "auth": "Authentication failed. Please check your CLIENT ID and PASSWORD."
+    },
+    "abort": {
+      "already_configured": "Kenter is already configured."
+    }
+  }
+}

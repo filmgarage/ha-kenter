@@ -1,48 +1,53 @@
-# Kenter Metering integration for Home Assistant
+# ha-kenter
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/)
+Home Assistant custom integration for [Kenter](https://www.kenter.nu) metering data via the Kenter Meetdata API.
 
-This custom integration connects Home Assistant with the **Kenter Metering API**  
-and creates sensors for each available meter and channel.
+## What it does
 
-## Features
-- Automatic token handling (no manual refresh required).
-- Fetches your meter list daily.
-- Fetches measurement data hourly.
-- Creates sensors with entity IDs like:  
+Creates sensors in Home Assistant for each electricity connection you have access to in the Kenter portal. Per connection you get four entities grouped under one device:
 
-`sensor.kenter_<meterid>_<shortname>`
+| Entity | Description | State class |
+|--------|-------------|-------------|
+| `sensor.{ean}_energy` | Cumulative delivery stand (kWh) | `total_increasing` |
+| `sensor.{ean}_return` | Cumulative return stand (kWh) | `total_increasing` |
+| `sensor.{ean}_interval_delivery` | Most recent delivery interval (kWh) | `measurement` |
+| `sensor.{ean}_interval_return` | Most recent return interval (kWh) | `measurement` |
 
-- Units are automatically set from the API (kWh, m³, etc.).
+The cumulative sensors combine the confirmed meter reading with today's interval data to give the best available current estimate. Entity IDs are based on the EAN number and never change.
+
+## Requirements
+
+- Kenter account with API access enabled
+- API client credentials (CLIENT ID + PASSWORD) from the Kenter portal via Account → API-clients → Toevoegen
 
 ## Installation
 
-### HACS (preferred)
-1. Go to HACS → Integrations → Custom Repositories.
-2. Add your repo URL (`https://github.com/filmgarage/ha-kenter`) as type *Integration*.
-3. Search for "Kenter Metering" in HACS and install.
-4. Restart Home Assistant.
-
-### Manual
-1. Copy the `kenter` folder into `config/custom_components/`.
-2. Restart Home Assistant.
+1. Copy the `custom_components/kenter` folder to your HA `config/custom_components/` directory
+2. Restart Home Assistant
+3. Go to Settings → Integrations → Add integration → search for **Kenter**
+4. Enter your CLIENT ID and PASSWORD
 
 ## Configuration
-1. Go to Home Assistant → Settings → Devices & Services → Add Integration.
-2. Search for **Kenter Metering**.
-3. Enter your `client_id` and `client_secret` from the Kenter customer portal.
-4. Done ✅
 
-## Example sensors
-- `sensor.kenter_00099999_consumption` → Supply of electrical energy
-- `sensor.kenter_00099999_feed_in` → Feed-in / generation of electricity
+The integration polls the Kenter API every 15 minutes by default. To change this, edit `update_interval` in `__init__.py`.
+
+## Sensor attributes
+
+All sensors include:
+
+| Attribute | Description |
+|-----------|-------------|
+| `ean` | EAN connection number |
+| `meter_number` | Physical meter serial number |
+| `metering_point_id` | Kenter internal metering point ID |
+| `related_metering_point_id` | Parent metering place ID |
+| `status` | Connection status (Actief / In storing / In behandeling) |
+| `client_name` | Account name in Kenter portal |
+
+Cumulative sensors additionally include `confirmed_stand`, `confirmed_date`, `intervals_today`, `interval_count` and `contains_estimated` (true when Kenter used estimated data due to a fault).
 
 ## Notes
-- Token is refreshed automatically (expires every hour).
-- Meter list is refreshed once per day.
-- Data is retrieved per day (recommended by Kenter API).
 
----
-
-### Disclaimer
-This integration is not affiliated with or endorsed by Kenter B.V.
+- Only physical meters (meetveld) are included; virtual billing points (meetplaats) are excluded
+- Kenter provides interval data per 15 minutes with a short delay
+- Data is available for the past 36 months via the API

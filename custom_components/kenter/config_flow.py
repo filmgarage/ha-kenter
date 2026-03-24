@@ -2,8 +2,10 @@ import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
+
 from .const import DOMAIN
 from .api import KenterAPI
+
 
 class KenterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
@@ -21,13 +23,15 @@ class KenterConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         schema = vol.Schema({
             vol.Required("client_id"): str,
-            vol.Required("client_secret"): str
+            vol.Required("client_secret"): str,
         })
         return self.async_show_form(step_id="user", data_schema=schema, errors=errors)
 
+    @staticmethod
     @callback
     def async_get_options_flow(config_entry):
         return KenterOptionsFlowHandler(config_entry)
+
 
 class KenterOptionsFlowHandler(config_entries.OptionsFlow):
     def __init__(self, config_entry):
